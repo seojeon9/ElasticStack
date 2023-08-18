@@ -1,0 +1,2 @@
+# ElasticStack
+elasticsearch, kibana
