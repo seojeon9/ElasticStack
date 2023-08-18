@@ -1,0 +1,31 @@
+version: '3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+    container_name: elasticsearch
+    networks:
+      - elastic
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "discovery.type=single-node"
+    volumes:
+      - /data/elasticsearch/data:/usr/share/elasticsearch/data
+      - /data/elasticsearch/logs:/usr/share/elasticsearch/logs
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.14.1
+    container_name: kibana
+    networks:
+      - elastic
+    ports:
+      - "5601:5601"
+    links:
+      - elasticsearch
+    volumes:
+      - /data/kibana/logs:/usr/share/kibana/logs
+
+networks:
+  elastic:
+    driver: bridge
